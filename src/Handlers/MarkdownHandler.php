@@ -24,7 +24,7 @@ class MarkdownHandler
 
     public function handle($file, $data)
     {
-        $filename = $file->getBasename($this->getFileExtension($file)) . '.html';
+        $filename = $this->resolveFilename($file);
         return new ProcessedFile($filename, $file->getRelativePath(), $this->render($file, $data));
     }
 
@@ -46,6 +46,17 @@ class MarkdownHandler
         return $this->temporaryFilesystem->put($bladeContent, function ($path) use ($data) {
             return $this->viewFactory->file($path, $data)->render();
         }, '.blade.php');
+    }
+
+    public function getMeta($file){
+        $document = $this->parseFile($file);
+        $options =  $document->getYAML();
+        $options["content"] = $document->getContent();
+        return $options;
+    }
+
+    public function resolveFilename($file){
+        return $file->getBasename($this->getFileExtension($file)) . '.html';
     }
 
     private function parseFile($file)

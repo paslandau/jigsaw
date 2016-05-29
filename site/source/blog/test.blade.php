@@ -2,7 +2,7 @@
 
 @section('body')
 
-<h1>Hello world!</h1>Foo
+<h1>Hello world!</h1>
 <?php xdebug_break(); ?>
-    {{$jigsaw->test}}
+    {{print_r($jigsaw->getMeta(),true)}}
 @endsection

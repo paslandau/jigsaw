@@ -22,4 +22,12 @@ class DefaultHandler
     {
         return new ProcessedFile($file->getFilename(), $file->getRelativePath(), $this->files->get($file->getRealPath()));
     }
+
+    public function resolveFilename($file){
+        return $file->getFilename();
+    }
+
+    public function getMeta($file){
+        return [];
+    }
 }
